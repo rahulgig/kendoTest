@@ -10,18 +10,23 @@
         public string FormId { get; set; }
 
 
-        public List<Item> Items { get; set; }
+        public List<Report401ItemModel> Items { get; set; }
 
-        public RequestMaker RequestMaker { get; set; }
+        public RequestMakerModel RequestMaker { get; set; }
 
         public DateOnly RequestDate { get; set; }
 
         public string RequestPurpose { get; set; }
 
-        public Recommender Recommender { get; set; }
+        public RecommenderModel Recommender { get; set; }
 
 
         public DateOnly RecommendDate { get; set; }
 
+        public Report401Model()
+        {
+            FormName = "माग फाराम";
+            MLPFormNo = 401;
+        }
     }
 }

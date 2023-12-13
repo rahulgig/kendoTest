@@ -1,12 +1,12 @@
 ﻿namespace kendoTest.Models
 {
-    public class Item
+    public class Report401ItemModel
     {
         public string Name { get; set; }
 
         public string Specification { get; set; }
 
-        public RequestedQuantities RequestedQuantities { get; set; }
+        public Report401QuantitiesModel RequestedQuantities { get; set; }
 
         public string Remarks { get; set; }
     }

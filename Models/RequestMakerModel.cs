@@ -1,6 +1,6 @@
 ﻿namespace kendoTest.Models
 {
-    public class RequestMaker : PersonBase
+    public class RequestMakerModel : PersonBaseModel
     {
     }
 

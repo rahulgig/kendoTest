@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace kendoTest.Controllers
 {
-    public class FormController : Controller
+    public class Report401Controller : Controller
     {
         public IActionResult Index()
         {
@@ -13,7 +13,8 @@ namespace kendoTest.Controllers
         [HttpGet]
         public IActionResult RequestForm()
         {
-            return View();
+            Report401Model model = new Report401Model();
+            return View(model);
         }
 
         [HttpGet]
@@ -31,8 +32,9 @@ namespace kendoTest.Controllers
 
 
         [HttpPost]
-        public IActionResult RequestForm(DataModel requestForm)
+        public IActionResult RequestForm(Report401Model requestForm)
         {
+
             Console.WriteLine(requestForm.ToString());
             return Ok(requestForm);
             

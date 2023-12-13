@@ -3,7 +3,7 @@
     Layout = "_Layout";
 }
 
-@model DataModel
+@model Report401Model
 <style>
     .singleInput{
         border: 0;
@@ -11,7 +11,7 @@
     }
 </style>
 
-<h6 class="k-text-right">म.ले.प.फाराम नं: ४०१</h6>
+<h6 class="k-text-right">म.ले.प.फाराम नं: @Model.MLPFormNo</h6>
 <div class="container" id="formDiv">
     <form method="post" id="requestForm">
         <h5 class="k-text-center">
@@ -25,7 +25,7 @@
             <label>कार्यालय कोड नं</label><input class="singleInput" type="text" id="OfficeId" />
         </h6>
         <br />
-        <h5 class="k-text-center"><b>माग फाराम</b></h5>
+        <h5 class="k-text-center"><b>@Model.FormName</b></h5>
         <div class="container k-text-right">
             <lable>आर्थिक वर्ष :</lable><input type="number" id="FiscalYear" style="width:auto;"/><br />
             <label>माग फाराम नं:</label><input type="text" id="FormId" style="width:auto;" /><br />
@@ -114,7 +114,7 @@
                     transport: {
                                 read: {
                                     dataType: "json",
-                                    url: "/Form/Offices",
+                                    url: "/Report401/Offices",
                                 }
                     }
                 }
@@ -203,7 +203,7 @@
            
                 $.ajax({
                     type: "POST",
-                    url: "/Form/RequestForm",
+                    url: "/Report401/RequestForm",
                     data: requestForm,
                     success: console.log(requestForm),
                     dataType: "JSON"
@@ -225,7 +225,10 @@
                         fields: {
                             SN: {type:"number",defaultValue : 1, editable: false},
                             Name: { type: "string", editable: true, validation: { required: true } },
-                            Specification: {type: "string", editable:true, validation: { required: true } }
+                            Specification: {type: "string", editable:true, validation: { required: true } },
+                            Unit: { type: "number", editable: true, validation: {required:true}},
+                            QUantity: { type: "number", editable: true, validation: {required:true}},
+
                         }
                     }
                 }
@@ -241,6 +244,9 @@
                     { field: "SN", title: "SN" },
                     { field: "Name", title: "Name" },
                     { field: "Specification", title: "Specification"},
+                    {field:"Unit", title:"Unit"},
+                    {field:"Quantity", title:"QUantity"},
+
                     { command: "edit", title: "Edit", width: "100px"},
                     { command: "destroy", title: "Delete", width: "100px" }
                 ],
