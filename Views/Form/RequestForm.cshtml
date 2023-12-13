@@ -1,0 +1,279 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+@model DataModel
+<style>
+    .singleInput{
+        border: 0;
+        border-bottom: double;
+    }
+</style>
+
+<h6 class="k-text-right">म.ले.प.फाराम नं: ४०१</h6>
+<div class="container" id="formDiv">
+    <form method="post" id="requestForm">
+        <h5 class="k-text-center">
+            सङ्घ/ प्रदेश / स्थानीय तह
+        </h5>
+        <h5 class="k-text-center">
+            <input id="officeDropdown" />
+            <input class="singleInput" type="text" id="OfficeName" /> <label>मन्त्रालय / विभाग / कार्यालय</label>
+        </h5>
+        <h6 class="k-text-center">
+            <label>कार्यालय कोड नं</label><input class="singleInput" type="text" id="OfficeId" />
+        </h6>
+        <br />
+        <h5 class="k-text-center"><b>माग फाराम</b></h5>
+        <div class="container k-text-right">
+            <lable>आर्थिक वर्ष :</lable><input type="number" id="FiscalYear" style="width:auto;"/><br />
+            <label>माग फाराम नं:</label><input type="text" id="FormId" style="width:auto;" /><br />
+            <label>मितिः</label><input style="width:200px;" id="FormDate"/> 
+        </div> 
+        <div class="container">
+            <div id="ItemsGrid"></div>
+        </div>
+        <div class="container row">
+            <div class="col-4">
+                <label>माग गर्ने:</label><br />
+                <label>नामः</label><input type="text" class="singleInput" id="RequestMakerName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" id="RequestMakerPost" /><br />
+                <label>मितिः</label><input id="RequestDate" style="width:200px;"/><br />
+                <label>प्रयोजनः</label><input type="text" class="singleInput" id="reqPurpose" /><br />
+            </div>
+            <div class="col-4">
+                <label>सिफारिस गर्ने:</label><br />
+                <label>नामः</label><input type="text" class="singleInput" id="RecommenderName"/><br />
+                <label>पद:</label><input type="text" class="singleInput" id="RecommenderPost"/><br />
+                <label>मितिः</label><input id="RecommendDate" style="width:200px;" />
+            </div>
+            <div class="col-4">
+                <label>स्टोरकिपरले भर्ने:</label><br />
+                <label>क) बजारबाट खरिद गर्नुपर्ने</label><input type="radio" class="singleInput" name="skRadio" /><br />
+                <label>ख) मौज्दातमा रहेको</label><input type="radio" class="singleInput" name="skRadio" /><br />
+                <label>स्टोरकिपरको दस्तखत:</label><br />
+                <label>नामः</label><input type="text" class="singleInput" name="skName" /><br />
+            </div>
+        </div>
+        <br />
+        <div class="container row">
+            <div class="col-4">
+                <label>मालसामान बुझिलिने:</label><br />
+                <label>नामः</label><input type="text" class="singleInput" name="receiverName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" name="receiverPost" /><br />
+                <label>मितिः</label><input id="receiverDatepicker" style="width:200px;" />
+            </div>
+            <div class="col-4">
+                <label>खर्च निकासा खातामा चढाउने:</label><br />
+                <label>नामः</label><input type="text" class="singleInput" name="expName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" name="expPost" /><br />
+                <label>मितिः</label><input id="expDatepicker" style="width:200px;" />
+            </div>
+            <div class="col-4">
+                <label>स्वीकृत गर्ने:</label><br />
+                <label>नामः</label><input type="text" class="singleInput" name="acceptName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" name="acceptPost" /><br />
+                <label>मितिः</label><input id="acceptDatepicker" style="width:200px;" />
+            </div>
+        </div>
+        <button type="submit" class="k-btn k-button-solid-success" id="submit">Submit</button>
+    </form>
+    <br />
+    <div class="container pt-3" id="formEnding">
+        <h4>उद्देश्य</h4>
+        <p>कार्यालयमा अधिकार प्राप्त अधिकारीले आदेश दिए बमोजिम स्टोरमा सम्पत्ति तथा जिन्सी मालसामानको माग र जारी गर्ने पहिचान गर्ने, 
+            सोसम्बन्धी नियन्त्रण र वैधानिकता सुनिश्चित गर्ने, मौज्दात नभएको जिन्सी तथा सम्पत्ति खरिद गर्ने । 					
+        </p>
+        <h5>फाराम भर्ने तरिका:</h5>
+        <div class="container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>कार्यालय सञ्चालन गर्न आवश्यक पर्ने सम्पत्ति तथा जिन्सी मालसामान (मौज्दात भएमा निकासाको लागि र मौज्दात नभएमा बजारबाट खरिदको लागि) माग गर्न यो फाराम भर्नुपर्दछ ।</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+    
+
+    <script>
+        $(document).ready(function() {
+            
+            
+
+            $('#officeDropdown').kendoDropDownList({
+                optionLabel:'Select Office Location',
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: {
+                    transport: {
+                                read: {
+                                    dataType: "json",
+                                    url: "/Form/Offices",
+                                }
+                    }
+                }
+            });
+                
+
+            $("#FormDate").kendoDatePicker({
+                dateInput: true,
+            });
+            $("#RequestDate").kendoDatePicker({
+                dateInput: true,
+            });
+            $("#RecommendDate").kendoDatePicker({
+                dateInput: true,
+            });
+        
+            $("#receiverDatepicker").kendoDatePicker({
+                dateInput: true,
+            });
+            $("#expDatepicker").kendoDatePicker({
+                dateInput: true,
+            });
+            $("#acceptDatepicker").kendoDatePicker({
+                dateInput: true,
+            });
+            $("#FiscalYear").kendoNumericTextBox({
+                size: "small"
+            });
+            
+            $("#requestedQuantities").kendoNumericTextBox({
+                size: "small"
+            });
+            
+            $("#requestedUnits").kendoNumericTextBox({
+                size: "small"
+            });
+            $("#FormId").kendoTextBox();
+
+            $("#itemName").kendoTextBox();
+
+            $("#specification").kendoTextBox();
+
+            $("#remarks").kendoTextArea({
+                rows: 2,
+                maxLength: 50
+            });
+
+
+
+            function submitForm(event) {
+                event.preventDefault();
+                var grid = $('#ItemsGrid').data("kendoGrid");
+                var gridItems = grid.dataSource.data();
+                var Items = gridItems.map(function (item) {
+                    return {
+                        SN : item.SN,
+                        Name : item.Name,
+                        Specification: item.Specification
+                    };
+                });
+                console.log(Items);
+                debugger;
+                var requestForm = 
+                    {
+                        OfficeName : $('#OfficeName').val(),
+                        OfficeId : $('#OfficeId').val(),
+                        FiscalYear : $('#FiscalYear').val(),
+                        FormId : $('#FormId').val(),
+                        FormDate : $('#FormDate').val(),
+                        RequestMaker:{
+                            Name: $('#RequestMakerName').val(),
+                            Post: $('#RequestMakerPost').val()
+                        },
+                        RequestDate: $('#RequestDate').val(),
+                        RequestPurpose: $('#reqPurpose').val(),
+                        Recommender:{
+                            Name:$('#RecommenderName').val(),
+                            Post:$('#RecommenderPost').val(),
+                        },
+                        RecommendDate:$('#RecommendDate').val(),
+                        Items: Items
+
+                        
+                }
+
+           
+                $.ajax({
+                    type: "POST",
+                    url: "/Form/RequestForm",
+                    data: requestForm,
+                    success: console.log(requestForm),
+                    dataType: "JSON"
+                });
+            }
+            var form = document.getElementById('requestForm');
+            form.addEventListener("submit", submitForm);
+
+
+
+            //Grid
+            var dataSource = new kendo.data.DataSource({
+                pageSize: 20,
+                data: [],
+                schema: {
+                    
+                    model: {
+                        id: "SN",
+                        fields: {
+                            SN: {type:"number",defaultValue : 1, editable: false},
+                            Name: { type: "string", editable: true, validation: { required: true } },
+                            Specification: {type: "string", editable:true, validation: { required: true } }
+                        }
+                    }
+                }
+            });
+            $("#ItemsGrid").kendoGrid({
+                autoBind : false,
+                dataSource: dataSource,
+                pageable: true,
+                height: 550,
+                toolbar: ["create"],
+                
+                columns: [
+                    { field: "SN", title: "SN" },
+                    { field: "Name", title: "Name" },
+                    { field: "Specification", title: "Specification"},
+                    { command: "edit", title: "Edit", width: "100px"},
+                    { command: "destroy", title: "Delete", width: "100px" }
+                ],
+                editable: "inline"
+            });
+        });
+
+    </script>
+
+
+
+@* <table class="table table-bordered" id="MainForm">
+    <thead>
+        <tr>
+            <th rowspan="2">क्र.सं.</th>
+            <th rowspan="2">सामानको नाम</th>
+            <th rowspan="2">स्पेसिफिकेसन</th>
+            <th colspan="2" class="k-text-center">माग गरिएको </th>
+            <th rowspan="2">कैफियत</th>
+        </tr>
+        <tr>
+            <th>एकाइ</th>
+            <th>परिमाण</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td><input type="text" id="itemName" name="Items[0].Name" /></td>
+            <td><input type="text" id="specification" name="Items[0].Specification" /></td>
+            <td><input type="number" id="requestedUnits" name="Items[0].RequestedQuantities.Unit" /></td>
+            <td><input type="number" id="requestedQuantities" name="Items[0].RequestedQuantities.Quantity" /></td>
+            <td><input type="text" id="remarks" name="Items[0].Remarks" /></td>
+        </tr>
+    </tbody>
+</table> *@
