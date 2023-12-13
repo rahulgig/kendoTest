@@ -7,7 +7,7 @@
         public int ReferenceNumber { get; set; }
         public string Specification{ get; set; }
 
-
+        public List<Iteam407> Items { get; set; }
 
 
 
