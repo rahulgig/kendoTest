@@ -31,7 +31,7 @@ namespace kendoTest.Controllers
 
 
         [HttpPost]
-        public IActionResult RequestForm(DataModel requestForm)
+        public IActionResult RequestForm(Report401Model requestForm)
         {
             Console.WriteLine(requestForm.ToString());
             return Ok(requestForm);
