@@ -1,6 +1,6 @@
 ﻿namespace kendoTest.Models
 {
-    public class PersonBase
+    public class PersonBaseModel
     {
         public string? Name { get; set; }
 

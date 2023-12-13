@@ -1,6 +1,6 @@
 ﻿namespace kendoTest.Models
 {
-    public class RequestedQuantities
+    public class QuantitiesModel
     {
         public int Unit { get; set; }
 

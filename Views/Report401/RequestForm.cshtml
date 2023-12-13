@@ -3,7 +3,7 @@
     Layout = "_Layout";
 }
 
-@model DataModel
+@model Report401Model
 <style>
     .singleInput{
         border: 0;
@@ -11,7 +11,7 @@
     }
 </style>
 
-<h6 class="k-text-right">म.ले.प.फाराम नं: ४०१</h6>
+<h6 class="k-text-right">म.ले.प.फाराम नं: @Model.MLPFormNo</h6>
 <div class="container" id="formDiv">
     <form method="post" id="requestForm">
         <h5 class="k-text-center">
@@ -25,7 +25,7 @@
             <label>कार्यालय कोड नं</label><input class="singleInput" type="text" id="OfficeId" />
         </h6>
         <br />
-        <h5 class="k-text-center"><b>माग फाराम</b></h5>
+        <h5 class="k-text-center"><b>@Model.FormName</b></h5>
         <div class="container k-text-right">
             <lable>आर्थिक वर्ष :</lable><input type="number" id="FiscalYear" style="width:auto;"/><br />
             <label>माग फाराम नं:</label><input type="text" id="FormId" style="width:auto;" /><br />
@@ -50,8 +50,8 @@
             </div>
             <div class="col-4">
                 <label>स्टोरकिपरले भर्ने:</label><br />
-                <label>क) बजारबाट खरिद गर्नुपर्ने</label><input type="radio" class="singleInput" name="skRadio" /><br />
-                <label>ख) मौज्दातमा रहेको</label><input type="radio" class="singleInput" name="skRadio" /><br />
+                <label>क) बजारबाट खरिद गर्नुपर्ने</label><input type="radio" name="skRadio" value="false"/><br />
+                <label>ख) मौज्दातमा रहेको</label><input type="radio" name="skRadio" value="true"/><br />
                 <label>स्टोरकिपरको दस्तखत:</label><br />
                 <label>नामः</label><input type="text" class="singleInput" name="skName" /><br />
             </div>
@@ -60,9 +60,9 @@
         <div class="container row">
             <div class="col-4">
                 <label>मालसामान बुझिलिने:</label><br />
-                <label>नामः</label><input type="text" class="singleInput" name="receiverName" /><br />
-                <label>पद:</label><input type="text" class="singleInput" name="receiverPost" /><br />
-                <label>मितिः</label><input id="receiverDatepicker" style="width:200px;" />
+                <label>नामः</label><input type="text" class="singleInput" id="ReceiverName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" id="ReceiverPost" /><br />
+                <label>मितिः</label><input id="ReceiveDate" style="width:200px;" />
             </div>
             <div class="col-4">
                 <label>खर्च निकासा खातामा चढाउने:</label><br />
@@ -83,7 +83,7 @@
     <div class="container pt-3" id="formEnding">
         <h4>उद्देश्य</h4>
         <p>कार्यालयमा अधिकार प्राप्त अधिकारीले आदेश दिए बमोजिम स्टोरमा सम्पत्ति तथा जिन्सी मालसामानको माग र जारी गर्ने पहिचान गर्ने, 
-            सोसम्बन्धी नियन्त्रण र वैधानिकता सुनिश्चित गर्ने, मौज्दात नभएको जिन्सी तथा सम्पत्ति खरिद गर्ने । 					
+            सोसम्बन्धी नियन्त्रण र वैधानिकता सुनिश्चित गर्ने, मौज्दात नभएको जिन्सी तथा सम्पत्ति खरिद गर्ने । 				
         </p>
         <h5>फाराम भर्ने तरिका:</h5>
         <div class="container">
@@ -112,10 +112,10 @@
                 dataValueField: "value",
                 dataSource: {
                     transport: {
-                                read: {
-                                    dataType: "json",
-                                    url: "/Form/Offices",
-                                }
+                              read: {
+                                  dataType: "json",
+                                  url: "/Report401/Offices",
+                              }
                     }
                 }
             });
@@ -131,7 +131,7 @@
                 dateInput: true,
             });
         
-            $("#receiverDatepicker").kendoDatePicker({
+            $("#ReceiveDate").kendoDatePicker({
                 dateInput: true,
             });
             $("#expDatepicker").kendoDatePicker({
@@ -176,7 +176,8 @@
                     };
                 });
                 console.log(Items);
-                debugger;
+
+
                 var requestForm = 
                     {
                         OfficeName : $('#OfficeName').val(),
@@ -195,6 +196,12 @@
                             Post:$('#RecommenderPost').val(),
                         },
                         RecommendDate:$('#RecommendDate').val(),
+                        Receiver:{
+                            Name:$('#ReceiverName').val(),
+                            Post:$('#ReceiverPost').val()
+                        },
+                        ReceiveDate : $('#ReceiveDate').val(),
+                        WasInStock : $("input[name='skRadio']:checked").val(),
                         Items: Items
 
                         
@@ -203,7 +210,7 @@
            
                 $.ajax({
                     type: "POST",
-                    url: "/Form/RequestForm",
+                    url: "/Report401/RequestForm",
                     data: requestForm,
                     success: console.log(requestForm),
                     dataType: "JSON"
@@ -225,7 +232,10 @@
                         fields: {
                             SN: {type:"number",defaultValue : 1, editable: false},
                             Name: { type: "string", editable: true, validation: { required: true } },
-                            Specification: {type: "string", editable:true, validation: { required: true } }
+                            Specification: {type: "string", editable:true, validation: { required: true } },
+                            Unit: { type: "number", editable: true, validation: {required:true}},
+                            QUantity: { type: "number", editable: true, validation: {required:true}},
+
                         }
                     }
                 }
@@ -241,6 +251,9 @@
                     { field: "SN", title: "SN" },
                     { field: "Name", title: "Name" },
                     { field: "Specification", title: "Specification"},
+                    {field:"Unit", title:"Unit"},
+                    {field:"Quantity", title:"QUantity"},
+
                     { command: "edit", title: "Edit", width: "100px"},
                     { command: "destroy", title: "Delete", width: "100px" }
                 ],
@@ -252,28 +265,3 @@
 
 
 
-@* <table class="table table-bordered" id="MainForm">
-    <thead>
-        <tr>
-            <th rowspan="2">क्र.सं.</th>
-            <th rowspan="2">सामानको नाम</th>
-            <th rowspan="2">स्पेसिफिकेसन</th>
-            <th colspan="2" class="k-text-center">माग गरिएको </th>
-            <th rowspan="2">कैफियत</th>
-        </tr>
-        <tr>
-            <th>एकाइ</th>
-            <th>परिमाण</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td><input type="text" id="itemName" name="Items[0].Name" /></td>
-            <td><input type="text" id="specification" name="Items[0].Specification" /></td>
-            <td><input type="number" id="requestedUnits" name="Items[0].RequestedQuantities.Unit" /></td>
-            <td><input type="number" id="requestedQuantities" name="Items[0].RequestedQuantities.Quantity" /></td>
-            <td><input type="text" id="remarks" name="Items[0].Remarks" /></td>
-        </tr>
-    </tbody>
-</table> *@
