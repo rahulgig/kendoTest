@@ -5,6 +5,11 @@
 
     public int FormNumber { get; set; }
 
+    public string Remarks { get; set; }
+
+
+
+
     //Current Year Field
 
     public int CurrentQuantity { get; set; }
@@ -26,7 +31,6 @@
     public decimal PendingRate { get; set; }
     public decimal PendingAmount { get; set; }
 
-    public string Remarks { get; set; }
 
 
     // Prepared by
@@ -41,3 +45,5 @@ public enum EntryType
     Expenditure,
     Pending
 }
+
+//Enum is a special class that represents a group of cons
