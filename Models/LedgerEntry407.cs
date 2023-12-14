@@ -27,6 +27,8 @@
     public decimal ExpenditureAmount { get; set; }
 
     // Pending fields
+    public EntryType EntryType { get; set; }
+
     public int PendingQuantity { get; set; }
     public decimal PendingRate { get; set; }
     public decimal PendingAmount { get; set; }

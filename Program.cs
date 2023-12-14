@@ -1,7 +1,13 @@
+using kendoTest.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DB407Context>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
+
 
 var app = builder.Build();
 

@@ -9,6 +9,8 @@
 
         public List<Iteam407> Items { get; set; }
 
+        public List<LedgerEntry407> LedgerEntries { get; set;}
+
 
 
     }
