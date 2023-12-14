@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace kendoTest.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class LedgerEntry407update : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,27 @@ namespace kendoTest.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Report407", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AcceptedByModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateOfAcceptance = table.Column<DateOnly>(type: "date", nullable: false),
+                    Report407ModelId = table.Column<long>(type: "bigint", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Post = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AcceptedByModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AcceptedByModel_Report407_Report407ModelId",
+                        column: x => x.Report407ModelId,
+                        principalTable: "Report407",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -74,8 +95,7 @@ namespace kendoTest.Migrations
                     PendingQuantity = table.Column<int>(type: "int", nullable: false),
                     PendingRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PendingAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PreparedByName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PreparedByPosition = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Total = table.Column<int>(type: "int", nullable: false),
                     Report407ModelId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -88,6 +108,32 @@ namespace kendoTest.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PreparedByModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateOfPreperation = table.Column<DateOnly>(type: "date", nullable: false),
+                    Report407ModelId = table.Column<long>(type: "bigint", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Post = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PreparedByModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PreparedByModel_Report407_Report407ModelId",
+                        column: x => x.Report407ModelId,
+                        principalTable: "Report407",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcceptedByModel_Report407ModelId",
+                table: "AcceptedByModel",
+                column: "Report407ModelId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Iteam407_Report407ModelId",
                 table: "Iteam407",
@@ -97,16 +143,27 @@ namespace kendoTest.Migrations
                 name: "IX_LedgerEntry407_Report407ModelId",
                 table: "LedgerEntry407",
                 column: "Report407ModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PreparedByModel_Report407ModelId",
+                table: "PreparedByModel",
+                column: "Report407ModelId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AcceptedByModel");
+
+            migrationBuilder.DropTable(
                 name: "Iteam407");
 
             migrationBuilder.DropTable(
                 name: "LedgerEntry407");
+
+            migrationBuilder.DropTable(
+                name: "PreparedByModel");
 
             migrationBuilder.DropTable(
                 name: "Report407");

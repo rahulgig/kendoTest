@@ -33,11 +33,12 @@
     public decimal PendingRate { get; set; }
     public decimal PendingAmount { get; set; }
 
+    public int Total { get; set; }
+
 
 
     // Prepared by
-    public string PreparedByName { get; set; }
-    public string PreparedByPosition { get; set; }
+
 }
 
 public enum EntryType

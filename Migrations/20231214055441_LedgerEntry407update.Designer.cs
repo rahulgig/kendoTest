@@ -12,8 +12,8 @@ using kendoTest.Models;
 namespace kendoTest.Migrations
 {
     [DbContext(typeof(DB407Context))]
-    [Migration("20231214050615_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231214055441_LedgerEntry407update")]
+    partial class LedgerEntry407update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,16 +78,38 @@ namespace kendoTest.Migrations
                     b.Property<decimal>("PendingRate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("PreparedByName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreparedByPosition")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Remarks")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("Report407ModelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Report407ModelId");
+
+                    b.ToTable("LedgerEntry407");
+                });
+
+            modelBuilder.Entity("kendoTest.Models.AcceptedByModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("DateOfAcceptance")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Post")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("Report407ModelId")
@@ -97,7 +119,7 @@ namespace kendoTest.Migrations
 
                     b.HasIndex("Report407ModelId");
 
-                    b.ToTable("LedgerEntry407");
+                    b.ToTable("AcceptedByModel");
                 });
 
             modelBuilder.Entity("kendoTest.Models.Iteam407", b =>
@@ -122,6 +144,33 @@ namespace kendoTest.Migrations
                     b.HasIndex("Report407ModelId");
 
                     b.ToTable("Iteam407");
+                });
+
+            modelBuilder.Entity("kendoTest.Models.PreparedByModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("DateOfPreperation")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Post")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("Report407ModelId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Report407ModelId");
+
+                    b.ToTable("PreparedByModel");
                 });
 
             modelBuilder.Entity("kendoTest.Models.Report407Model", b =>
@@ -176,6 +225,13 @@ namespace kendoTest.Migrations
                         .HasForeignKey("Report407ModelId");
                 });
 
+            modelBuilder.Entity("kendoTest.Models.AcceptedByModel", b =>
+                {
+                    b.HasOne("kendoTest.Models.Report407Model", null)
+                        .WithMany("AcceptedBy")
+                        .HasForeignKey("Report407ModelId");
+                });
+
             modelBuilder.Entity("kendoTest.Models.Iteam407", b =>
                 {
                     b.HasOne("kendoTest.Models.Report407Model", null)
@@ -183,11 +239,22 @@ namespace kendoTest.Migrations
                         .HasForeignKey("Report407ModelId");
                 });
 
+            modelBuilder.Entity("kendoTest.Models.PreparedByModel", b =>
+                {
+                    b.HasOne("kendoTest.Models.Report407Model", null)
+                        .WithMany("PreparedBy")
+                        .HasForeignKey("Report407ModelId");
+                });
+
             modelBuilder.Entity("kendoTest.Models.Report407Model", b =>
                 {
+                    b.Navigation("AcceptedBy");
+
                     b.Navigation("Items");
 
                     b.Navigation("LedgerEntries");
+
+                    b.Navigation("PreparedBy");
                 });
 #pragma warning restore 612, 618
         }
