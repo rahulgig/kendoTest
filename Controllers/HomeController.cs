@@ -1,10 +1,8 @@
 using kendoTest.Models;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 
-namespace kendoTest.Controllers
+namespace Project1.Controllers
 {
     public class HomeController : Controller
     {
@@ -20,36 +18,23 @@ namespace kendoTest.Controllers
             return View();
         }
 
-        public IActionResult NewPage()
+        // Add this action method to handle the form submission
+        [HttpPost]
+        public IActionResult SubmitForm(Form404Model formData)
         {
-            return View();
+            // Process the form data here
+            // Example: Log the received data
+            _logger.LogInformation($"Mantralaya: {formData.Mantralaya}, Karlaya: {formData.Karlaya}");
+
+            // Return a response if needed
+            return Json(new { success = true });
         }
+
+
         public IActionResult Privacy()
         {
             return View();
         }
-
-        /*[HttpGet]
-        public JsonResult GetData()
-        {
-            DataModel dm = new DataModel { id = 1 , name="ek"};
-            DataModel dm2 = new DataModel { id = 2, name = "dui" };
-
-            List<DataModel> dataSet = new List<DataModel> { dm, dm2};
-            
-
-            return Json(dataSet);
-        }*/
-        [HttpPost]
-
-        public JsonResult CollectHtml(string editorData) 
-        { 
-            Console.WriteLine(editorData);
-            return Json(editorData);
-        }
-
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
