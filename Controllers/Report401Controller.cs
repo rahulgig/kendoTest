@@ -13,27 +13,30 @@ namespace kendoTest.Controllers
         [HttpGet]
         public IActionResult RequestForm()
         {
-            Report401Model model = new Report401Model();
+            Report401ViewModel model = new();
+            model.MLPFormNo = 401;
+            model.FormName = "माग फाराम";
             return View(model);
         }
 
         [HttpGet]
         public JsonResult Offices()
         {
-            List<object> officeList = new List<object>
-            {
+            List<object> officeList =
+            [
                 new { text = "Kathmandu", value = "Kathmandu" },
                 new { text = "Lalitpur", value = "Lalitpur" },
                 new {text = "Ilam", value="Ilam"}
-            };
+            ];
             return Json(officeList);
         }
 
 
 
         [HttpPost]
-        public IActionResult RequestForm(Report401Model requestForm)
+        public IActionResult RequestForm(Report401ViewModel requestForm)
         {
+
 
             Console.WriteLine(requestForm.ToString());
             return Ok(requestForm);

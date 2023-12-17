@@ -3,7 +3,7 @@
     Layout = "_Layout";
 }
 
-@model Report401Model
+@model Report401ViewModel
 <style>
     .singleInput{
         border: 0;
@@ -11,21 +11,20 @@
     }
 </style>
 
-<h6 class="k-text-right">म.ले.प.फाराम नं: @Model.MLPFormNo</h6>
+<h6 class="k-text-right">म.ले.प.फाराम नं: <span id="MLPNo">@Model.MLPFormNo</span></h6>
 <div class="container" id="formDiv">
     <form method="post" id="requestForm">
         <h5 class="k-text-center">
             सङ्घ/ प्रदेश / स्थानीय तह
         </h5>
         <h5 class="k-text-center">
-            <input id="officeDropdown" />
             <input class="singleInput" type="text" id="OfficeName" /> <label>मन्त्रालय / विभाग / कार्यालय</label>
         </h5>
         <h6 class="k-text-center">
             <label>कार्यालय कोड नं</label><input class="singleInput" type="text" id="OfficeId" />
         </h6>
         <br />
-        <h5 class="k-text-center"><b>@Model.FormName</b></h5>
+        <h5 class="k-text-center" id="FormName"><b>@Model.FormName</b></h5>
         <div class="container k-text-right">
             <lable>आर्थिक वर्ष :</lable><input type="number" id="FiscalYear" style="width:auto;"/><br />
             <label>माग फाराम नं:</label><input type="text" id="FormId" style="width:auto;" /><br />
@@ -53,7 +52,7 @@
                 <label>क) बजारबाट खरिद गर्नुपर्ने</label><input type="radio" name="skRadio" value="false"/><br />
                 <label>ख) मौज्दातमा रहेको</label><input type="radio" name="skRadio" value="true"/><br />
                 <label>स्टोरकिपरको दस्तखत:</label><br />
-                <label>नामः</label><input type="text" class="singleInput" name="skName" /><br />
+                <label>नामः</label><input type="text" class="singleInput" id="StorekeeperName" /><br />
             </div>
         </div>
         <br />
@@ -66,15 +65,15 @@
             </div>
             <div class="col-4">
                 <label>खर्च निकासा खातामा चढाउने:</label><br />
-                <label>नामः</label><input type="text" class="singleInput" name="expName" /><br />
-                <label>पद:</label><input type="text" class="singleInput" name="expPost" /><br />
-                <label>मितिः</label><input id="expDatepicker" style="width:200px;" />
+                <label>नामः</label><input type="text" class="singleInput" id="ExpName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" id="ExpPost" /><br />
+                <label>मितिः</label><input id="ExpRecordDate" style="width:200px;" />
             </div>
             <div class="col-4">
                 <label>स्वीकृत गर्ने:</label><br />
-                <label>नामः</label><input type="text" class="singleInput" name="acceptName" /><br />
-                <label>पद:</label><input type="text" class="singleInput" name="acceptPost" /><br />
-                <label>मितिः</label><input id="acceptDatepicker" style="width:200px;" />
+                <label>नामः</label><input type="text" class="singleInput" id="AcceptName" /><br />
+                <label>पद:</label><input type="text" class="singleInput" id="AcceptPost" /><br />
+                <label>मितिः</label><input id="AcceptedDate" style="width:200px;" />
             </div>
         </div>
         <button type="submit" class="k-btn k-button-solid-success" id="submit">Submit</button>
@@ -106,26 +105,7 @@
             
             
 
-            $('#officeDropdown').kendoDropDownList({
-                optionLabel:'Select Office Location',
-                dataTextField: "text",
-                dataValueField: "value",
-                dataSource: {
-                    transport: {
-<<<<<<< HEAD
-                              read: {
-                                  dataType: "json",
-                                  url: "/Report401/Offices",
-                              }
-=======
-                                read: {
-                                    dataType: "json",
-                                    url: "/Report401/Offices",
-                                }
->>>>>>> e114d305c9206a664afc439a80f758f57625d12f
-                    }
-                }
-            });
+            
                 
 
             $("#FormDate").kendoDatePicker({
@@ -141,10 +121,10 @@
             $("#ReceiveDate").kendoDatePicker({
                 dateInput: true,
             });
-            $("#expDatepicker").kendoDatePicker({
+            $("#ExpRecordDate").kendoDatePicker({
                 dateInput: true,
             });
-            $("#acceptDatepicker").kendoDatePicker({
+            $("#AcceptedDate").kendoDatePicker({
                 dateInput: true,
             });
             $("#FiscalYear").kendoNumericTextBox({
@@ -177,9 +157,14 @@
                 var gridItems = grid.dataSource.data();
                 var Items = gridItems.map(function (item) {
                     return {
-                        SN : item.SN,
                         Name : item.Name,
-                        Specification: item.Specification
+                        Specification: item.Specification,
+                        RequestedQuantities:{
+                            Unit : item.Unit,
+                            Quantity: item.Quantity
+                        },
+                        
+                        Remarks: item.Remarks
                     };
                 });
                 console.log(Items);
@@ -187,28 +172,43 @@
 
                 var requestForm = 
                     {
+                        MLPFormNo: $('#MLPNo').text(),
+                        FormName:$('#FormName').text(),
                         OfficeName : $('#OfficeName').val(),
                         OfficeId : $('#OfficeId').val(),
                         FiscalYear : $('#FiscalYear').val(),
                         FormId : $('#FormId').val(),
                         FormDate : $('#FormDate').val(),
-                        RequestMaker:{
+                        RequestedBy:{
                             Name: $('#RequestMakerName').val(),
                             Post: $('#RequestMakerPost').val()
                         },
                         RequestDate: $('#RequestDate').val(),
                         RequestPurpose: $('#reqPurpose').val(),
-                        Recommender:{
+                        RecommendedBy:{
                             Name:$('#RecommenderName').val(),
                             Post:$('#RecommenderPost').val(),
                         },
                         RecommendDate:$('#RecommendDate').val(),
-                        Receiver:{
+                        Storekeeper:{
+                            Name:$('#StorekeeperName').val()
+                        },
+                        ReceivedBy:{
                             Name:$('#ReceiverName').val(),
                             Post:$('#ReceiverPost').val()
                         },
                         ReceiveDate : $('#ReceiveDate').val(),
                         WasInStock : $("input[name='skRadio']:checked").val(),
+                        ExpenseRecordedBy:{
+                            Name:$('#ExpName').val(),
+                            Post:$('#ExpPost').val()
+                        },
+                        ExpenseRecordDate: $('#ExpRecordDate').val(),
+                        AcceptedBy:{
+                            Name: $('#AcceptName').val(),
+                            Post:$('#AcceptPost').val()
+                        },
+                        AcceptedDate:$('#AcceptedDate').val(),
                         Items: Items
 
                         
@@ -223,8 +223,8 @@
                     dataType: "JSON"
                 });
             }
-            var form = document.getElementById('requestForm');
-            form.addEventListener("submit", submitForm);
+                var form = document.getElementById('requestForm');
+                form.addEventListener("submit", submitForm);
 
 
 
@@ -235,14 +235,12 @@
                 schema: {
                     
                     model: {
-                        id: "SN",
                         fields: {
-                            SN: {type:"number",defaultValue : 1, editable: false},
                             Name: { type: "string", editable: true, validation: { required: true } },
                             Specification: {type: "string", editable:true, validation: { required: true } },
                             Unit: { type: "number", editable: true, validation: {required:true}},
-                            QUantity: { type: "number", editable: true, validation: {required:true}},
-
+                            Quantity: { type: "number", editable: true, validation: {required:true}},
+                            Remarks:{type: "string", editable:true, validation: { required: true } }
                         }
                     }
                 }
@@ -255,12 +253,11 @@
                 toolbar: ["create"],
                 
                 columns: [
-                    { field: "SN", title: "SN" },
                     { field: "Name", title: "Name" },
                     { field: "Specification", title: "Specification"},
                     {field:"Unit", title:"Unit"},
-                    {field:"Quantity", title:"QUantity"},
-
+                    {field:"Quantity", title:"Quantity"},
+                    {field:"Remarks", title:"Remarks"},
                     { command: "edit", title: "Edit", width: "100px"},
                     { command: "destroy", title: "Delete", width: "100px" }
                 ],

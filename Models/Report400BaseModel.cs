@@ -13,5 +13,7 @@
         public int FiscalYear { get; set; }
 
         public string FormName { get; set; }
+        public string FormPurpose { get; set; }
+        public string FormInstructions { get; set; }
     }
 }
