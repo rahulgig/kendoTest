@@ -23,7 +23,6 @@
             public string Source { get; set; }
 
             // Navigation property
-            public LedgerEntry408 LedgerEntry { get; set; }
         }
 
         public class Income

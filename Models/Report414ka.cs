@@ -1,6 +1,7 @@
 ﻿namespace kendoTest.Models
 {
-    public class Report414ka
+    public class Report414ka:Report400BaseModel
     {
+
     }
 }
