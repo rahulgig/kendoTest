@@ -5,5 +5,7 @@
         public string? Name { get; set; }
 
         public string? Post {  get; set; }
+
+        public DateOnly Date { get; set; }
     }
 }

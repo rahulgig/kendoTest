@@ -12,7 +12,7 @@ namespace kendoTest.Models
 
         public double AggregateCost {get; set;}
 
-        public double TotleCost { get; set;}
+        public double TotalCost { get; set;}
 
 
         public class Return
