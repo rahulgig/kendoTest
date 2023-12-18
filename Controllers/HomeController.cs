@@ -42,8 +42,8 @@ namespace kendoTest.Controllers
         }*/
         [HttpPost]
 
-        public JsonResult CollectHtml(string editorData) 
-        { 
+        public JsonResult CollectHtml(string editorData)
+        {
             Console.WriteLine(editorData);
             return Json(editorData);
         }

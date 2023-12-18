@@ -1,9 +1,4 @@
 ﻿
-@{
-    Layout = "_Layout";
-}
-
-@model DataModel
 <style>
     .singleInput{
         border: 0;
@@ -168,6 +163,8 @@
                 event.preventDefault();
                 var grid = $('#ItemsGrid').data("kendoGrid");
                 var gridItems = grid.dataSource.data();
+                console.log(gridItems);
+                debugger;
                 var Items = gridItems.map(function (item) {
                     return {
                         SN : item.SN,
@@ -251,29 +248,4 @@
     </script>
 
 
-
-@* <table class="table table-bordered" id="MainForm">
-    <thead>
-        <tr>
-            <th rowspan="2">क्र.सं.</th>
-            <th rowspan="2">सामानको नाम</th>
-            <th rowspan="2">स्पेसिफिकेसन</th>
-            <th colspan="2" class="k-text-center">माग गरिएको </th>
-            <th rowspan="2">कैफियत</th>
-        </tr>
-        <tr>
-            <th>एकाइ</th>
-            <th>परिमाण</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td><input type="text" id="itemName" name="Items[0].Name" /></td>
-            <td><input type="text" id="specification" name="Items[0].Specification" /></td>
-            <td><input type="number" id="requestedUnits" name="Items[0].RequestedQuantities.Unit" /></td>
-            <td><input type="number" id="requestedQuantities" name="Items[0].RequestedQuantities.Quantity" /></td>
-            <td><input type="text" id="remarks" name="Items[0].Remarks" /></td>
-        </tr>
-    </tbody>
-</table> *@
+ 
