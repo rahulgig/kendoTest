@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace Project1.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -12,6 +13,7 @@ namespace Project1.Controllers
         {
             _logger = logger;
         }
+        [Route("CallRoute")]
 
         public IActionResult Index()
         {

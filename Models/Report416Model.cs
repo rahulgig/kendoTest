@@ -1,6 +1,6 @@
 ﻿namespace kendoTest.Models
 {
-    public class Report416Model
+    public class Report416Model:Report400BaseModel
     {
         public List<PreparedByModel> preparedByModels { get; set; }
         public List<AcceptedByModel> acceptedByModels { get; set; }
