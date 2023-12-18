@@ -2,7 +2,6 @@
 {
     public class Report400BaseModel
     {
-        public long Id { get; set; }
 
         public int MLPFormNo { get; set; }
 

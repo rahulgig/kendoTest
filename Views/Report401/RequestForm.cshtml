@@ -27,7 +27,7 @@
         <h5 class="k-text-center" id="FormName"><b>@Model.FormName</b></h5>
         <div class="container k-text-right">
             <lable>आर्थिक वर्ष :</lable><input type="number" id="FiscalYear" style="width:auto;"/><br />
-            <label>माग फाराम नं:</label><input type="text" id="FormId" style="width:auto;" /><br />
+            <label>माग फाराम नं:</label><input type="text" id="RequestFormNo" style="width:auto;" /><br />
             <label>मितिः</label><input style="width:200px;" id="FormDate"/> 
         </div> 
         <div class="container">
@@ -173,11 +173,11 @@
                 var requestForm = 
                     {
                         MLPFormNo: $('#MLPNo').text(),
+                        RequestFormNo:$('#RequestFormNo').val(),
                         FormName:$('#FormName').text(),
                         OfficeName : $('#OfficeName').val(),
                         OfficeId : $('#OfficeId').val(),
                         FiscalYear : $('#FiscalYear').val(),
-                        FormId : $('#FormId').val(),
                         FormDate : $('#FormDate').val(),
                         RequestedBy:{
                             Name: $('#RequestMakerName').val(),

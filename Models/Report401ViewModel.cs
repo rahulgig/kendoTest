@@ -2,7 +2,7 @@
 {
     public class Report401ViewModel: Report400BaseModel
     {
-        public string FormId { get; set; }
+        public string RequestFormNo { get; set; }
         public DateTime FormDate { get; set; }
         public List<Report401ItemModel> Items { get; set; }
         public PersonBaseModel RequestedBy { get; set; }

@@ -2,7 +2,7 @@
 {
     public class Report402ViewModel: Report400BaseModel
     {
-        public string Name { get; set; }
+        public string NameOfOrganizationOrPerson { get; set; }
         public string Address { get; set; }
         public string PAN { get; set; }
         public string PhoneNumber { get; set; }
@@ -40,10 +40,10 @@
         public DateTime AcceptedDate { get; set;}
 
         public DateTime DeliveryDate { get; set; }
-
+        //stamp
         public string DeliveringEntity { get; set; }
 
-
+        //stamp
 
     }
 }

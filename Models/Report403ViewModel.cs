@@ -9,7 +9,7 @@
         public string SubmissionReportNumber { get; set; }
         public List<Report403ItemModel> Items { get; set; }
 
-        public float TotalAmount { get; set; }
+        public double TotalAmount { get; set; }
 
         public PersonBaseModel PreparedBy {  get; set; }
         public DateTime PreparedDate { get; set; }
