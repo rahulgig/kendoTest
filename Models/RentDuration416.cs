@@ -19,6 +19,9 @@ namespace kendoTest.Models
         public DateTime AggregateDuration {get; set;}
 
 
+       
+
+        
 
 
 

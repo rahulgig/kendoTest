@@ -4,6 +4,12 @@
     {
         public List<PreparedByModel> preparedByModels { get; set; }
         public List<AcceptedByModel> acceptedByModels { get; set; }
+        public List<TotalReceiptAmount416> totalReceiptAmount416s { get; set; }
+
+        public List<LedgerEntry416> ledgerEntry416s { get; set; }
+
+
+        public List<RentDuration416> rentDuration416s { get; set; }
 
         public class Property
         {
@@ -15,6 +21,8 @@
             public string Specification { get; set; }
             public decimal Value { get; set; }
             public bool GivenOrTaken { get; set; }
+
+            
 
 
         }
