@@ -13,9 +13,11 @@ namespace kendoTest.Controllers
         [HttpGet]
         public IActionResult RequestForm()
         {
-            Report401ViewModel model = new();
-            model.MLPFormNo = 401;
-            model.FormName = "माग फाराम";
+            Report401ViewModel model = new()
+            {
+                MLPFormNo = 401,
+                FormName = "माग फाराम"
+            };
             return View(model);
         }
 
@@ -30,6 +32,7 @@ namespace kendoTest.Controllers
             ];
             return Json(officeList);
         }
+
 
 
 
